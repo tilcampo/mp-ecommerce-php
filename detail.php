@@ -13,7 +13,7 @@ MercadoPago\SDK::setAccessToken('APP_USR-1159009372558727-072921-8d0b9980c749498
 
 MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
 
-# Creando la referencia mercadopago
+# Creando la item mercadopago
 $preference = new MercadoPago\Preference();
 
 //...
@@ -24,16 +24,16 @@ $preference->back_urls = array(
 );
 $preference->auto_return = "approved";
 
-// Creando referencia
+// Creando item
 
-$referencia = new MercadoPago\Item();
-$referencia->id = 1234;
-$referencia->title = $nombre_producto;
-$referencia->description = 'Dispositivo móvil de Tienda e-commerce';
-$referencia->picture_url = $url_img_producto;
-$referencia->quantity = 1;
-$referencia->unit_price = $precio_producto;
-$preference->items = array($referencia);
+$item = new MercadoPago\Item();
+$item->id = 1234;
+$item->title = $nombre_producto;
+$item->description = 'Dispositivo móvil de Tienda e-commerce';
+$item->picture_url = $url_img_producto;
+$item->quantity = 1;
+$item->unit_price = $precio_producto;
+$preference->items = array($item);
 
 //Configurando formas de pago
 $preference->payment_methods = array(
@@ -42,23 +42,23 @@ $preference->payment_methods = array(
     "installments" => 6 //Maximo 6 pagos
 );
 
-//Información del pagador
-$pagador = new MercadoPago\Payer();
-$pagador->name = "Lalo";
-$pagador->surname = "Landa";
-$pagador->email = "test_user_58295862@testuser.com";
-$pagador->phone = array(
+//Información del payer
+$payer = new MercadoPago\Payer();
+$payer->name = "Lalo";
+$payer->surname = "Landa";
+$payer->email = "test_user_58295862@testuser.com";
+$payer->phone = array(
     "area_code" => "52",
     "number" => "5549737300"
 );
 
-$pagador->address = array(
+$payer->address = array(
     "street_name" => "Insurgentes Sur",
     "street_number" => 1602,
     "zip_code" => "03940"
 );
 
-$preference->payer = $pagador;
+$preference->payer = $payer;
 
 $preference->external_reference = "jmelopez@gmail.com";
 // Agregando notificador
