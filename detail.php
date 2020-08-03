@@ -11,7 +11,7 @@ $precio_producto = (float)$_POST['price'];
 
 $url_img_producto = "https://tilcampo-mp-commerce-php.herokuapp.com" . substr($_POST['img'], 1);
 
-require __DIR__ . '/vendor/autoload.php';
+require 'https://tilcampo-mp-commerce-php.herokuapp.com/vendor/autoload.php';
 
 //referencias api mercado pago
 MercadoPago\SDK::setAccessToken('APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181');
