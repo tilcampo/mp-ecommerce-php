@@ -4,6 +4,7 @@ error_reporting(-1);
 
 // Lo mismo que error_reporting(E_ALL);
 ini_set('error_reporting', E_ALL);
+try {
 
 $nombre_producto = $_POST['title'];
 
@@ -11,7 +12,7 @@ $precio_producto = (float)$_POST['price'];
 
 $url_img_producto = "https://tilcampo-mp-commerce-php.herokuapp.com" . substr($_POST['img'], 1);
 
-require 'https://tilcampo-mp-commerce-php.herokuapp.com/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 //referencias api mercado pago
 MercadoPago\SDK::setAccessToken('APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181');
@@ -70,6 +71,9 @@ $preference->external_reference = "jmelopez@gmail.com";
 $preference->notification_url = "https://tilcampo-mp-commerce-php.herokuapp.com/notifica.php";
 //Agregando preferencia
 $preference->save();
+} catch (Exception $e) {
+echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+}
 
 ?>
 <!DOCTYPE html>
