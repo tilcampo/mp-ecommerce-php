@@ -1,3 +1,72 @@
+<?php
+
+$nombre_producto = $_POST['title'];
+
+$precio_producto = (float)$_POST['price'];
+
+$url_img_producto = "https://tilcampo-mp-commerce-php.herokuapp.com" . substr($_POST['img'], 1);
+
+require __DIR__ . '/vendor/autoload.php';
+
+//referencias api mercado pago
+MercadoPago\SDK::setAccessToken('APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181');
+
+MercadoPago\SDK::setIntegratorId("dev_24c65fb163bf11ea96500242ac130004");
+
+# Creando la referencia mercadopago
+$preference = new MercadoPago\Preference();
+
+//...
+$preference->back_urls = array(
+    "success" => "https://tilcampo-mp-commerce-php.herokuapp.com/compra-exitosa.php",
+    "failure" => "https://tilcampo-mp-commerce-php.herokuapp.com/error-compra.php",
+    "pending" => "https://tilcampo-mp-commerce-php.herokuapp.com/pendiente-pago.php"
+);
+$preference->auto_return = "approved";
+
+// Creando referencia
+
+$referencia = new MercadoPago\Item();
+$referencia->id = 1234;
+$referencia->title = $nombre_producto;
+$referencia->description = 'Dispositivo móvil de Tienda e-commerce';
+$referencia->picture_url = $url_img_producto;
+$referencia->quantity = 1;
+$referencia->unit_price = $precio_producto;
+$preference->items = array($referencia);
+
+//Configurando formas de pago
+$preference->payment_methods = array(
+    "excluded_payment_types" => array(array("id" => "atm")), //Sin aceptar en cajero
+    "excluded_payment_methods" => array(array("id" => "amex")), //Sin aceptar AMEX
+    "installments" => 6 //Maximo 6 pagos
+);
+
+//Información del pagador
+$pagador = new MercadoPago\Payer();
+$pagador->name = "Lalo";
+$pagador->surname = "Landa";
+$pagador->email = "test_user_58295862@testuser.com";
+$pagador->phone = array(
+    "area_code" => "52",
+    "number" => "5549737300"
+);
+
+$pagador->address = array(
+    "street_name" => "Insurgentes Sur",
+    "street_number" => 1602,
+    "zip_code" => "03940"
+);
+
+$preference->payer = $pagador;
+
+$preference->external_reference = "jmelopez@gmail.com";
+// Agregando notificador
+$preference->notification_url = "https://tilcampo-mp-commerce-php.herokuapp.com/notifica.php";
+//Agregando preferencia
+$preference->save();
+
+?>
 <!DOCTYPE html>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
