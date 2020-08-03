@@ -5,9 +5,8 @@ $nombre_producto = $_POST['title'];
 $precio_producto = (float)$_POST['price'];
 
 $url_img_producto = "https://tilcampo-mp-commerce-php.herokuapp.com" . substr($_POST['img'], 1);
-/*
-require __DIR__ . '/vendor/autoload.php';
 
+require __DIR__ . '/vendor/autoload.php';
 
 //referencias api mercado pago
 MercadoPago\SDK::setAccessToken('APP_USR-1159009372558727-072921-8d0b9980c7494985a5abd19fbe921a3d-617633181');
@@ -66,7 +65,7 @@ $preference->external_reference = "jmelopez@gmail.com";
 $preference->notification_url = "https://tilcampo-mp-commerce-php.herokuapp.com/notifica.php";
 //Agregando preferencia
 $preference->save();
-*/
+
 ?>
 <!DOCTYPE html>
 <html class="supports-animation supports-columns svg no-touch no-ie no-oldie no-ios supports-backdrop-filter as-mouseuser" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -200,7 +199,11 @@ $preference->save();
                                             <?php echo "$" . $_POST['unit'] ?>
                                         </h3>
                                     </div>
-                                    <button type="submit" class="mercadopago-button" formmethod="post">Pagar</button>
+                                    <form action="<?php echo $preference->init_point; ?>">
+                                    <button type="submit" class="mercadopago-button"
+                                            formmethod="post">Pagar la compra
+                                    </button>
+                                </form>
                                 </div>
                             </div>
                         </div>
